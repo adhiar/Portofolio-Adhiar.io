@@ -1,516 +1,643 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  Mail, 
-  MapPin, 
-  Phone, 
-  Briefcase, 
-  GraduationCap, 
-  Code2, 
-  Trophy, 
-  ChevronRight, 
-  Microscope,
-  TerminalSquare,
-  Cpu,
-  Database,
-  Menu,
-  X,
-  ExternalLink
-} from 'lucide-react';
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I Made Adhi Aryadi - Portfolio</title>
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 
-// --- CV DATA ---
-const cvData = {
-  name: "I Made Adhi Aryadi",
-  role: "Physics Graduate | Machine Learning & IT Enthusiast",
-  location: "Bandung, Indonesia",
-  email: "adhiar2604@gmail.com",
-  phone: "+6281237837650",
-  summary: "Physics graduate from Padjadjaran University with a strong foundation in laboratory instrumentation and theoretical physics, coupled with proven expertise in software development, machine learning, and AI-agentic systems. Experienced in developing web dashboards, building OCR models, and conducting advanced material research.",
-  skills: {
-    software: ["Python", "JavaScript", "HTML/CSS", "Machine Learning", "CNN-RNN Architectures", "AI Agents"],
-    hardware: ["LabView", "Proteus", "Microcontrollers", "FTIR Characterization", "Particle Size Analyzer", "Photoluminescence", "Electroluminescence", "Battery Measurement (EIS, CV, Cycle test)"]
-  },
-  experience: [
-    {
-      id: 1,
-      role: "SANDBOX Program - IT Team",
-      company: "Finder U-CoE (Nanofunctional Powder Research Group)",
-      location: "Sumedang, West Java",
-      period: "August 2025 - Present",
-      achievements: [
-        "Created a Local AI-Agentic bot for scientific review using an open-source journal database.",
-        "Created Web-app Dashboard Monitor for Project Manager.",
-        "Successfully developed 2 sub-domain websites frontend for services and agent chatbot.",
-        "Product Highlights: Service Sub Domain, AI-Agent."
-      ]
-    },
-    {
-      id: 2,
-      role: "Fundamental Physics Tutor",
-      company: "Physics Department of Padjadjaran University",
-      location: "Sumedang, West Java",
-      period: "Jan 2026 - Present",
-      achievements: [
-        "Developed 2 problem sets for each chapter (each set includes 5 problem tasks across 6 chapters).",
-        "Conducted classes with 34 Students to explain theoretical approaches.",
-        "Created reports for supervisor: Prof. Camellia Panatarani, M.Sc."
-      ]
-    },
-    {
-      id: 3,
-      role: "Assistant Lecturer of Physics Calculus III",
-      company: "Physics Department of Padjadjaran University",
-      location: "Sumedang, West Java",
-      period: "Jan 2025 - Aug 2025",
-      achievements: [
-        "Delivered Problem Set Solutions for 3 Chapters.",
-        "Graded classes comprising 28 Students.",
-        "Created reports for supervisor: Prof. Dr. Fitrilawati, M.Sc."
-      ]
-    },
-    {
-      id: 4,
-      role: "Coordinator Assistant Lab of Physics Instrumentation",
-      company: "Akademi Metrologi dan Instrumentasi",
-      location: "Sumedang, West Java",
-      period: "Aug 2024 - Dec 2024",
-      achievements: [
-        "Achieved a high satisfaction rating of 4.7/5 for teaching.",
-        "Created brand new instruction modules for electrical control and thermodynamic modules.",
-        "Collected and organized reports from other assistant laboratories."
-      ]
-    },
-    {
-      id: 5,
-      role: "Assistant Laboratory of Physics Instrumentation",
-      company: "Physics Department of Padjadjaran University",
-      location: "Sumedang, West Java",
-      period: "Jan 2024 - July 2024",
-      achievements: [
-        "Created Instrumentation practical modules and calibrated instrumentation devices.",
-        "Created One Chapter Module (PID controller using ATMega integrated with Python), supervised by Ferry Faizal, Ph.D.",
-        "Guided students in practical classes and explained applied theoretical methods."
-      ]
-    },
-    {
-      id: 6,
-      role: "Assistant Laboratory of Electronics Experiment",
-      company: "Physics Department of Padjadjaran University",
-      location: "Sumedang, West Java",
-      period: "July 2023 - Dec 2023",
-      achievements: [
-        "Calibrated modules, tutored fundamentals, and guided experimental setups.",
-        "Conducted 13 modules for a class of 28 students."
-      ]
-    },
-    {
-      id: 7,
-      role: "Innovation Readiness Level Assessor Team",
-      company: "Finder U-CoE",
-      location: "Sumedang, West Java",
-      period: "June 2022 - Dec 2022",
-      achievements: [
-        "Created 2 web-apps to collect and visualize data.",
-        "Created Web-app Dashboard Monitor for Project Manager.",
-        "Successfully developed 2 sub-domain websites frontend for services and agent chatbot."
-      ]
-    }
-  ],
-  education: [
-    {
-      id: 1,
-      institution: "Padjadjaran University",
-      degree: "Bachelor Degree in Physics",
-      period: "Aug 2021 - Dec 2025",
-      details: "Lab/Minor: Laboratory of Instrumentation, Electronic, Computation and Theoretical Physics.",
-      research: "Fabrication emission layer based on Carbon Quantum Dots Poly (9-Vinylcarbozole) (PVK) for Light Emitting Diode. Proposed to create a fully working LED with organic material called Carbon-Dot on bioplastic (sharper color than OLED, more eco-friendly than QLED)."
-    },
-    {
-      id: 2,
-      institution: "MSIB BANGKIT by GoTo, Traveloka, and Google",
-      degree: "Student Batch 2024 in Machine Learning",
-      period: "July 2024 - Dec 2024",
-      details: "Selected to join a company project team (6/58 Application). Became best team in company project category.",
-      research: ""
-    }
-  ],
-  projects: [
-    {
-      id: 1,
-      title: "Optical Character Recognition (OCR) Model",
-      context: "MSIB Bangkit Capstone - PT. Borwita",
-      description: "Created an OCR model for ID cards based on a CNN-RNN architecture. Achieved 40% higher accuracy compared to default library packages like pytesseract, EasyOCR, and PyOCR. Solved problems with automatic landscaping and B&W ID cards using color conversion and thresholding.",
-      tags: ["Machine Learning", "Python", "CNN-RNN", "Computer Vision"],
-      link: "https://github.com/Capstone-Borwita"
-    },
-    {
-      id: 2,
-      title: "Local AI-Agentic Scientific Review Bot",
-      context: "Finder U-CoE SANDBOX Program",
-      description: "Developed a local AI-Agentic bot designed to conduct scientific reviews by interfacing with an open-source journal database.",
-      tags: ["AI Agent", "Python", "Research Tech"],
-      link: "https://agentic.tmcagen.online"
-    },
-    {
-      id: 3,
-      title: "Carbon-Dot Bioplastic LED Research",
-      context: "Padjadjaran University Undergraduate Research",
-      description: "Fabricated an emission layer based on Carbon Quantum Dots Poly (9-Vinylcarbozole) (PVK) to create an eco-friendly LED with sharper color characteristics (30-40nm) compared to traditional OLEDs.",
-      tags: ["Physics", "Materials Science", "Hardware Fabrication"]
-    },
-    {
-      id: 4,
-      title: "PID Controller System Integration",
-      context: "Instrumentation Lab",
-      description: "Designed and implemented a PID controller system using an ATMega microcontroller integrated with a Python backend for data processing and control.",
-      tags: ["Microcontrollers", "Python", "Hardware-Software Integration"],
-      link: "https://github.com/adhiar/PID-python-C-integrated"
-    }
-  ],
-  awards: [
-    "Contributed Speaker in The 5th International Conference and Exhibition on Powder Technology Indonesia 2025",
-    "Alumni of Summer Science Institute Program in National University Singapore Faculty of Science",
-    "1st Winner on National Undergraduate Research Competition held by ITS",
-    "1st Winner Physic Debate on National Competition held by UPI",
-    "Runner-up in Business Plan Idea as team leader on National Competition held by UPH",
-    "3rd Winner in Business Model Canvas as team leader on National Competition held by Telkom Uni",
-    "TOP 5 Finalist Business Plan Idea in Binus Business Competition",
-    "The Most Outstanding Student in Physic Department 2022",
-    "Putra Fisika 2021",
-    "Olympiad Delegation of Padjadjaran University on National Physic Olympiad for Undergraduate Student (ONMIPA 2021)"
-  ],
-  organization: {
-    role: "Executive Board Member / Core Management",
-    name: "HIFI Unpad (Physic Undergraduate Student Society)",
-    period: "Jan 2023 - Dec 2023",
-    achievements: [
-      "Received the highest satisfaction rating (3.51/4.00) throughout the existence of the organization (since 1958).",
-      "Implemented efficient financial management strategies to stabilize the organization, successfully generating an 8 million IDR profit (increasing funds from 32M to 40M IDR)."
-    ]
-  }
-};
-
-// --- COMPONENTS ---
-
-const SectionHeading = ({ title, icon: Icon }) => (
-  <div className="flex items-center gap-3 mb-8">
-    <div className="p-3 bg-blue-500/10 rounded-lg text-blue-400">
-      <Icon size={24} />
-    </div>
-    <h2 className="text-3xl font-bold text-slate-100">{title}</h2>
-    <div className="flex-grow h-px bg-slate-800 ml-4"></div>
-  </div>
-);
-
-const Badge = ({ children }) => (
-  <span className="px-3 py-1 bg-slate-800 text-blue-300 text-sm font-medium rounded-full border border-slate-700">
-    {children}
-  </span>
-);
-
-export default function App() {
-  const [activeSection, setActiveSection] = useState('home');
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  // Handle scroll spy
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = ['home', 'experience', 'education', 'projects', 'skills', 'awards'];
-      const scrollPosition = window.scrollY + 100;
-
-      for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element) {
-          const top = element.offsetTop;
-          const height = element.offsetHeight;
-          if (scrollPosition >= top && scrollPosition < top + height) {
-            setActiveSection(section);
-          }
+    <!-- Customizing Tailwind config slightly for smooth transitions -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+                    }
+                }
+            }
         }
-      }
-    };
+    </script>
+    <style>
+        /* Base styles */
+        body {
+            background-color: #020617; /* slate-950 */
+            color: #cbd5e1; /* slate-300 */
+        }
+        /* Selection color */
+        ::selection {
+            background-color: rgba(59, 130, 246, 0.3); /* blue-500/30 */
+        }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-slate-950/80 backdrop-blur-md border-b border-slate-800 z-50 transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center cursor-pointer">
+                    <a href="#home" class="text-xl font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
+                        IA.
+                    </a>
+                </div>
+                
+                <!-- Desktop Nav -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="#experience" class="nav-link text-sm font-medium transition-colors text-slate-400 hover:text-blue-400">Experience</a>
+                    <a href="#education" class="nav-link text-sm font-medium transition-colors text-slate-400 hover:text-blue-400">Education</a>
+                    <a href="#projects" class="nav-link text-sm font-medium transition-colors text-slate-400 hover:text-blue-400">Projects</a>
+                    <a href="#skills" class="nav-link text-sm font-medium transition-colors text-slate-400 hover:text-blue-400">Skills</a>
+                    <a href="#awards" class="nav-link text-sm font-medium transition-colors text-slate-400 hover:text-blue-400">Awards</a>
+                </div>
 
-  const scrollTo = (id) => {
-    const element = document.getElementById(id);
-    if (element) {
-      window.scrollTo({
-        top: element.offsetTop - 80,
-        behavior: 'smooth',
-      });
-    }
-    setIsMobileMenuOpen(false);
-  };
-
-  const navLinks = [
-    { id: 'experience', label: 'Experience' },
-    { id: 'education', label: 'Education' },
-    { id: 'projects', label: 'Projects' },
-    { id: 'skills', label: 'Skills' },
-    { id: 'awards', label: 'Awards' },
-  ];
-
-  return (
-    <div className="min-h-screen bg-slate-950 text-slate-300 font-sans selection:bg-blue-500/30">
-      
-      {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-slate-950/80 backdrop-blur-md border-b border-slate-800 z-50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex-shrink-0 flex items-center cursor-pointer" onClick={() => scrollTo('home')}>
-              <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
-                IA.
-              </span>
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-slate-400 hover:text-slate-100 focus:outline-none">
+                        <i data-lucide="menu" id="menu-icon-open" class="w-6 h-6"></i>
+                        <i data-lucide="x" id="menu-icon-close" class="w-6 h-6 hidden"></i>
+                    </button>
+                </div>
             </div>
-            
-            {/* Desktop Nav */}
-            <div className="hidden md:flex space-x-8">
-              {navLinks.map((link) => (
-                <button
-                  key={link.id}
-                  onClick={() => scrollTo(link.id)}
-                  className={`text-sm font-medium transition-colors hover:text-blue-400 ${
-                    activeSection === link.id ? 'text-blue-400' : 'text-slate-400'
-                  }`}
-                >
-                  {link.label}
-                </button>
-              ))}
-            </div>
-
-            {/* Mobile Menu Button */}
-            <div className="md:hidden flex items-center">
-              <button 
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="text-slate-400 hover:text-slate-100"
-              >
-                {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-              </button>
-            </div>
-          </div>
         </div>
 
-        {/* Mobile Nav */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden bg-slate-900 border-b border-slate-800">
-            <div className="px-2 pt-2 pb-3 space-y-1">
-              {navLinks.map((link) => (
-                <button
-                  key={link.id}
-                  onClick={() => scrollTo(link.id)}
-                  className="block w-full text-left px-3 py-2 text-base font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-md"
-                >
-                  {link.label}
-                </button>
-              ))}
+        <!-- Mobile Nav Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-b border-slate-800">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#experience" class="mobile-nav-link block w-full text-left px-3 py-2 text-base font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-md">Experience</a>
+                <a href="#education" class="mobile-nav-link block w-full text-left px-3 py-2 text-base font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-md">Education</a>
+                <a href="#projects" class="mobile-nav-link block w-full text-left px-3 py-2 text-base font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-md">Projects</a>
+                <a href="#skills" class="mobile-nav-link block w-full text-left px-3 py-2 text-base font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-md">Skills</a>
+                <a href="#awards" class="mobile-nav-link block w-full text-left px-3 py-2 text-base font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-md">Awards</a>
             </div>
-          </div>
-        )}
-      </nav>
+        </div>
+    </nav>
 
-      {/* Main Content Area */}
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16">
+    <!-- Main Content -->
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16">
         
-        {/* HERO SECTION */}
-        <section id="home" className="py-20 flex flex-col items-start min-h-[80vh] justify-center">
-          <div className="inline-block px-4 py-2 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded-full text-sm font-medium mb-6">
-            Available for Opportunities
-          </div>
-          <h1 className="text-5xl md:text-7xl font-extrabold text-slate-100 tracking-tight mb-4">
-            I Made <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">Adhi Aryadi</span>
-          </h1>
-          <h2 className="text-xl md:text-2xl text-slate-400 font-medium mb-6">
-            {cvData.role}
-          </h2>
-          <p className="max-w-2xl text-lg text-slate-400 leading-relaxed mb-10">
-            {cvData.summary}
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-            <a href={`mailto:${cvData.email}`} className="flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors">
-              <Mail size={18} /> Contact Me
-            </a>
-            <div className="flex flex-wrap gap-4 items-center text-sm text-slate-400 bg-slate-900/50 px-6 py-3 rounded-lg border border-slate-800">
-              <span className="flex items-center gap-2"><MapPin size={16} className="text-blue-400"/> {cvData.location}</span>
-              <span className="hidden sm:inline text-slate-600">|</span>
-              <span className="flex items-center gap-2"><Phone size={16} className="text-blue-400"/> {cvData.phone}</span>
+        <!-- HERO SECTION -->
+        <section id="home" class="py-20 flex flex-col items-start min-h-[80vh] justify-center">
+            <div class="inline-block px-4 py-2 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded-full text-sm font-medium mb-6">
+                Available for Opportunities
             </div>
-          </div>
+            <h1 class="text-5xl md:text-7xl font-extrabold text-slate-100 tracking-tight mb-4">
+                I Made <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">Adhi Aryadi</span>
+            </h1>
+            <h2 class="text-xl md:text-2xl text-slate-400 font-medium mb-6">
+                Physics Graduate | Machine Learning & IT Enthusiast
+            </h2>
+            <p class="max-w-2xl text-lg text-slate-400 leading-relaxed mb-10">
+                Physics graduate from Padjadjaran University with a strong foundation in laboratory instrumentation and theoretical physics, coupled with proven expertise in software development, machine learning, and AI-agentic systems. Experienced in developing web dashboards, building OCR models, and conducting advanced material research.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+                <a href="mailto:adhiar2604@gmail.com" class="flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors">
+                    <i data-lucide="mail" class="w-[18px] h-[18px]"></i> Contact Me
+                </a>
+                <div class="flex flex-wrap gap-4 items-center text-sm text-slate-400 bg-slate-900/50 px-6 py-3 rounded-lg border border-slate-800">
+                    <span class="flex items-center gap-2">
+                        <i data-lucide="map-pin" class="w-4 h-4 text-blue-400"></i> Bandung, Indonesia
+                    </span>
+                    <span class="hidden sm:inline text-slate-600">|</span>
+                    <span class="flex items-center gap-2">
+                        <i data-lucide="phone" class="w-4 h-4 text-blue-400"></i> +6281237837650
+                    </span>
+                </div>
+            </div>
         </section>
 
-        {/* EXPERIENCE SECTION */}
-        <section id="experience" className="py-20">
-          <SectionHeading title="Work Experience" icon={Briefcase} />
-          <div className="relative border-l border-slate-800 ml-3 md:ml-4 space-y-12">
-            {cvData.experience.map((exp) => (
-              <div key={exp.id} className="relative pl-8 md:pl-0">
-                {/* Timeline dot */}
-                <div className="absolute left-[-5px] md:left-[-5px] top-2 w-3 h-3 bg-slate-950 border-2 border-blue-500 rounded-full"></div>
+        <!-- EXPERIENCE SECTION -->
+        <section id="experience" class="py-20 scroll-mt-16">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="p-3 bg-blue-500/10 rounded-lg text-blue-400">
+                    <i data-lucide="briefcase" class="w-6 h-6"></i>
+                </div>
+                <h2 class="text-3xl font-bold text-slate-100">Work Experience</h2>
+                <div class="flex-grow h-px bg-slate-800 ml-4"></div>
+            </div>
+
+            <div class="relative border-l border-slate-800 ml-3 md:ml-4 space-y-12">
+                <!-- Exp 1 -->
+                <div class="relative pl-8 md:pl-0">
+                    <div class="absolute left-[-5px] md:left-[-5px] top-2 w-3 h-3 bg-slate-950 border-2 border-blue-500 rounded-full"></div>
+                    <div class="md:ml-10 bg-slate-900/50 border border-slate-800 p-6 rounded-2xl hover:border-slate-700 transition-colors">
+                        <div class="flex flex-col md:flex-row md:items-start justify-between mb-4 gap-2">
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-100">SANDBOX Program - IT Team</h3>
+                                <p class="text-blue-400 font-medium">Finder U-CoE (Nanofunctional Powder Research Group)</p>
+                            </div>
+                            <div class="text-sm text-slate-500 font-mono bg-slate-950 px-3 py-1 rounded-full border border-slate-800 inline-block w-max">August 2025 - Present</div>
+                        </div>
+                        <ul class="space-y-2 mt-4">
+                            <li class="flex items-start gap-3 text-slate-400">
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-blue-500 mt-1 flex-shrink-0"></i>
+                                <span>Created a Local AI-Agentic bot for scientific review using an open-source journal database.</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-slate-400">
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-blue-500 mt-1 flex-shrink-0"></i>
+                                <span>Created Web-app Dashboard Monitor for Project Manager.</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-slate-400">
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-blue-500 mt-1 flex-shrink-0"></i>
+                                <span>Successfully developed 2 sub-domain websites frontend for services and agent chatbot.</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-slate-400">
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-blue-500 mt-1 flex-shrink-0"></i>
+                                <span>Product Highlights: Service Sub Domain, AI-Agent.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Exp 2 -->
+                <div class="relative pl-8 md:pl-0">
+                    <div class="absolute left-[-5px] md:left-[-5px] top-2 w-3 h-3 bg-slate-950 border-2 border-blue-500 rounded-full"></div>
+                    <div class="md:ml-10 bg-slate-900/50 border border-slate-800 p-6 rounded-2xl hover:border-slate-700 transition-colors">
+                        <div class="flex flex-col md:flex-row md:items-start justify-between mb-4 gap-2">
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-100">Fundamental Physics Tutor</h3>
+                                <p class="text-blue-400 font-medium">Physics Department of Padjadjaran University</p>
+                            </div>
+                            <div class="text-sm text-slate-500 font-mono bg-slate-950 px-3 py-1 rounded-full border border-slate-800 inline-block w-max">Jan 2026 - Present</div>
+                        </div>
+                        <ul class="space-y-2 mt-4">
+                            <li class="flex items-start gap-3 text-slate-400">
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-blue-500 mt-1 flex-shrink-0"></i>
+                                <span>Developed 2 problem sets for each chapter (each set includes 5 problem tasks across 6 chapters).</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-slate-400">
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-blue-500 mt-1 flex-shrink-0"></i>
+                                <span>Conducted classes with 34 Students to explain theoretical approaches.</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-slate-400">
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-blue-500 mt-1 flex-shrink-0"></i>
+                                <span>Created reports for supervisor: Prof. Camellia Panatarani, M.Sc.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Exp 3 -->
+                <div class="relative pl-8 md:pl-0">
+                    <div class="absolute left-[-5px] md:left-[-5px] top-2 w-3 h-3 bg-slate-950 border-2 border-blue-500 rounded-full"></div>
+                    <div class="md:ml-10 bg-slate-900/50 border border-slate-800 p-6 rounded-2xl hover:border-slate-700 transition-colors">
+                        <div class="flex flex-col md:flex-row md:items-start justify-between mb-4 gap-2">
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-100">Assistant Lecturer of Physics Calculus III</h3>
+                                <p class="text-blue-400 font-medium">Physics Department of Padjadjaran University</p>
+                            </div>
+                            <div class="text-sm text-slate-500 font-mono bg-slate-950 px-3 py-1 rounded-full border border-slate-800 inline-block w-max">Jan 2025 - Aug 2025</div>
+                        </div>
+                        <ul class="space-y-2 mt-4">
+                            <li class="flex items-start gap-3 text-slate-400">
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-blue-500 mt-1 flex-shrink-0"></i>
+                                <span>Delivered Problem Set Solutions for 3 Chapters.</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-slate-400">
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-blue-500 mt-1 flex-shrink-0"></i>
+                                <span>Graded classes comprising 28 Students.</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-slate-400">
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-blue-500 mt-1 flex-shrink-0"></i>
+                                <span>Created reports for supervisor: Prof. Dr. Fitrilawati, M.Sc.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Exp 4 -->
+                <div class="relative pl-8 md:pl-0">
+                    <div class="absolute left-[-5px] md:left-[-5px] top-2 w-3 h-3 bg-slate-950 border-2 border-blue-500 rounded-full"></div>
+                    <div class="md:ml-10 bg-slate-900/50 border border-slate-800 p-6 rounded-2xl hover:border-slate-700 transition-colors">
+                        <div class="flex flex-col md:flex-row md:items-start justify-between mb-4 gap-2">
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-100">Coordinator Assistant Lab of Physics Instrumentation</h3>
+                                <p class="text-blue-400 font-medium">Akademi Metrologi dan Instrumentasi</p>
+                            </div>
+                            <div class="text-sm text-slate-500 font-mono bg-slate-950 px-3 py-1 rounded-full border border-slate-800 inline-block w-max">Aug 2024 - Dec 2024</div>
+                        </div>
+                        <ul class="space-y-2 mt-4">
+                            <li class="flex items-start gap-3 text-slate-400">
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-blue-500 mt-1 flex-shrink-0"></i>
+                                <span>Achieved a high satisfaction rating of 4.7/5 for teaching.</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-slate-400">
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-blue-500 mt-1 flex-shrink-0"></i>
+                                <span>Created brand new instruction modules for electrical control and thermodynamic modules.</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-slate-400">
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-blue-500 mt-1 flex-shrink-0"></i>
+                                <span>Collected and organized reports from other assistant laboratories.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Exp 5 -->
+                <div class="relative pl-8 md:pl-0">
+                    <div class="absolute left-[-5px] md:left-[-5px] top-2 w-3 h-3 bg-slate-950 border-2 border-blue-500 rounded-full"></div>
+                    <div class="md:ml-10 bg-slate-900/50 border border-slate-800 p-6 rounded-2xl hover:border-slate-700 transition-colors">
+                        <div class="flex flex-col md:flex-row md:items-start justify-between mb-4 gap-2">
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-100">Assistant Laboratory of Physics Instrumentation</h3>
+                                <p class="text-blue-400 font-medium">Physics Department of Padjadjaran University</p>
+                            </div>
+                            <div class="text-sm text-slate-500 font-mono bg-slate-950 px-3 py-1 rounded-full border border-slate-800 inline-block w-max">Jan 2024 - July 2024</div>
+                        </div>
+                        <ul class="space-y-2 mt-4">
+                            <li class="flex items-start gap-3 text-slate-400">
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-blue-500 mt-1 flex-shrink-0"></i>
+                                <span>Created Instrumentation practical modules and calibrated instrumentation devices.</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-slate-400">
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-blue-500 mt-1 flex-shrink-0"></i>
+                                <span>Created One Chapter Module (PID controller using ATMega integrated with Python), supervised by Ferry Faizal, Ph.D.</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-slate-400">
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-blue-500 mt-1 flex-shrink-0"></i>
+                                <span>Guided students in practical classes and explained applied theoretical methods.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Exp 6 -->
+                <div class="relative pl-8 md:pl-0">
+                    <div class="absolute left-[-5px] md:left-[-5px] top-2 w-3 h-3 bg-slate-950 border-2 border-blue-500 rounded-full"></div>
+                    <div class="md:ml-10 bg-slate-900/50 border border-slate-800 p-6 rounded-2xl hover:border-slate-700 transition-colors">
+                        <div class="flex flex-col md:flex-row md:items-start justify-between mb-4 gap-2">
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-100">Assistant Laboratory of Electronics Experiment</h3>
+                                <p class="text-blue-400 font-medium">Physics Department of Padjadjaran University</p>
+                            </div>
+                            <div class="text-sm text-slate-500 font-mono bg-slate-950 px-3 py-1 rounded-full border border-slate-800 inline-block w-max">July 2023 - Dec 2023</div>
+                        </div>
+                        <ul class="space-y-2 mt-4">
+                            <li class="flex items-start gap-3 text-slate-400">
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-blue-500 mt-1 flex-shrink-0"></i>
+                                <span>Calibrated modules, tutored fundamentals, and guided experimental setups.</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-slate-400">
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-blue-500 mt-1 flex-shrink-0"></i>
+                                <span>Conducted 13 modules for a class of 28 students.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Exp 7 -->
+                <div class="relative pl-8 md:pl-0">
+                    <div class="absolute left-[-5px] md:left-[-5px] top-2 w-3 h-3 bg-slate-950 border-2 border-blue-500 rounded-full"></div>
+                    <div class="md:ml-10 bg-slate-900/50 border border-slate-800 p-6 rounded-2xl hover:border-slate-700 transition-colors">
+                        <div class="flex flex-col md:flex-row md:items-start justify-between mb-4 gap-2">
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-100">Innovation Readiness Level Assessor Team</h3>
+                                <p class="text-blue-400 font-medium">Finder U-CoE</p>
+                            </div>
+                            <div class="text-sm text-slate-500 font-mono bg-slate-950 px-3 py-1 rounded-full border border-slate-800 inline-block w-max">June 2022 - Dec 2022</div>
+                        </div>
+                        <ul class="space-y-2 mt-4">
+                            <li class="flex items-start gap-3 text-slate-400">
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-blue-500 mt-1 flex-shrink-0"></i>
+                                <span>Created 2 web-apps to collect and visualize data.</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-slate-400">
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-blue-500 mt-1 flex-shrink-0"></i>
+                                <span>Created Web-app Dashboard Monitor for Project Manager.</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-slate-400">
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-blue-500 mt-1 flex-shrink-0"></i>
+                                <span>Successfully developed 2 sub-domain websites frontend for services and agent chatbot.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- EDUCATION & ORG SECTION -->
+        <section id="education" class="py-20 scroll-mt-16">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="p-3 bg-blue-500/10 rounded-lg text-blue-400">
+                    <i data-lucide="graduation-cap" class="w-6 h-6"></i>
+                </div>
+                <h2 class="text-3xl font-bold text-slate-100">Education & Leadership</h2>
+                <div class="flex-grow h-px bg-slate-800 ml-4"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 
-                <div className="md:ml-10 bg-slate-900/50 border border-slate-800 p-6 rounded-2xl hover:border-slate-700 transition-colors">
-                  <div className="flex flex-col md:flex-row md:items-start justify-between mb-4 gap-2">
-                    <div>
-                      <h3 className="text-xl font-bold text-slate-100">{exp.role}</h3>
-                      <p className="text-blue-400 font-medium">{exp.company}</p>
+                <!-- Education -->
+                <div class="space-y-6">
+                    <h3 class="text-2xl font-semibold text-slate-200 mb-6 flex items-center gap-2">
+                        <i data-lucide="microscope" class="w-5 h-5 text-indigo-400"></i> Academic Journey
+                    </h3>
+                    
+                    <div class="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 p-6 rounded-2xl">
+                        <div class="text-sm text-blue-400 font-mono mb-2">Aug 2021 - Dec 2025</div>
+                        <h4 class="text-lg font-bold text-slate-100">Bachelor Degree in Physics</h4>
+                        <p class="text-slate-300 font-medium mb-3">Padjadjaran University</p>
+                        <p class="text-sm text-slate-400 mb-3">Lab/Minor: Laboratory of Instrumentation, Electronic, Computation and Theoretical Physics.</p>
+                        <div class="mt-4 p-4 bg-slate-900 rounded-lg border border-slate-800 text-sm">
+                            <strong class="text-indigo-300 block mb-1">Research Focus:</strong>
+                            <span class="text-slate-400">Fabrication emission layer based on Carbon Quantum Dots Poly (9-Vinylcarbozole) (PVK) for Light Emitting Diode. Proposed to create a fully working LED with organic material called Carbon-Dot on bioplastic (sharper color than OLED, more eco-friendly than QLED).</span>
+                        </div>
                     </div>
-                    <div className="text-sm text-slate-500 font-mono bg-slate-950 px-3 py-1 rounded-full border border-slate-800 inline-block w-max">
-                      {exp.period}
+
+                    <div class="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 p-6 rounded-2xl">
+                        <div class="text-sm text-blue-400 font-mono mb-2">July 2024 - Dec 2024</div>
+                        <h4 class="text-lg font-bold text-slate-100">Student Batch 2024 in Machine Learning</h4>
+                        <p class="text-slate-300 font-medium mb-3">MSIB BANGKIT by GoTo, Traveloka, and Google</p>
+                        <p class="text-sm text-slate-400 mb-3">Selected to join a company project team (6/58 Application). Became best team in company project category.</p>
                     </div>
-                  </div>
-                  <ul className="space-y-2 mt-4">
-                    {exp.achievements.map((item, idx) => (
-                      <li key={idx} className="flex items-start gap-3 text-slate-400">
-                        <ChevronRight size={16} className="text-blue-500 mt-1 flex-shrink-0" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
                 </div>
-              </div>
-            ))}
-          </div>
+
+                <!-- Organization -->
+                <div class="space-y-6">
+                    <h3 class="text-2xl font-semibold text-slate-200 mb-6 flex items-center gap-2">
+                        <i data-lucide="terminal-square" class="w-5 h-5 text-indigo-400"></i> Organization Experience
+                    </h3>
+                    <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
+                        <div class="text-sm text-blue-400 font-mono mb-2">Jan 2023 - Dec 2023</div>
+                        <h4 class="text-lg font-bold text-slate-100">Executive Board Member / Core Management</h4>
+                        <p class="text-slate-300 font-medium mb-4">HIFI Unpad (Physic Undergraduate Student Society)</p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3 text-sm text-slate-400">
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Received the highest satisfaction rating (3.51/4.00) throughout the existence of the organization (since 1958).</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-sm text-slate-400">
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0"></i>
+                                <span>Implemented efficient financial management strategies to stabilize the organization, successfully generating an 8 million IDR profit (increasing funds from 32M to 40M IDR).</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
         </section>
 
-        {/* EDUCATION & ORG SECTION */}
-        <section id="education" className="py-20">
-          <SectionHeading title="Education & Leadership" icon={GraduationCap} />
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            
-            {/* Education */}
-            <div className="space-y-6">
-              <h3 className="text-2xl font-semibold text-slate-200 mb-6 flex items-center gap-2">
-                <Microscope size={20} className="text-indigo-400"/> Academic Journey
-              </h3>
-              {cvData.education.map((edu) => (
-                <div key={edu.id} className="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 p-6 rounded-2xl">
-                  <div className="text-sm text-blue-400 font-mono mb-2">{edu.period}</div>
-                  <h4 className="text-lg font-bold text-slate-100">{edu.degree}</h4>
-                  <p className="text-slate-300 font-medium mb-3">{edu.institution}</p>
-                  <p className="text-sm text-slate-400 mb-3">{edu.details}</p>
-                  {edu.research && (
-                    <div className="mt-4 p-4 bg-slate-900 rounded-lg border border-slate-800 text-sm">
-                      <strong className="text-indigo-300 block mb-1">Research Focus:</strong>
-                      <span className="text-slate-400">{edu.research}</span>
-                    </div>
-                  )}
+        <!-- PROJECTS SECTION -->
+        <section id="projects" class="py-20 scroll-mt-16">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="p-3 bg-blue-500/10 rounded-lg text-blue-400">
+                    <i data-lucide="code-2" class="w-6 h-6"></i>
                 </div>
-              ))}
+                <h2 class="text-3xl font-bold text-slate-100">Featured Projects</h2>
+                <div class="flex-grow h-px bg-slate-800 ml-4"></div>
             </div>
 
-            {/* Organization */}
-            <div className="space-y-6">
-              <h3 className="text-2xl font-semibold text-slate-200 mb-6 flex items-center gap-2">
-                <TerminalSquare size={20} className="text-indigo-400"/> Organization Experience
-              </h3>
-              <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
-                <div className="text-sm text-blue-400 font-mono mb-2">{cvData.organization.period}</div>
-                <h4 className="text-lg font-bold text-slate-100">{cvData.organization.role}</h4>
-                <p className="text-slate-300 font-medium mb-4">{cvData.organization.name}</p>
-                <ul className="space-y-3">
-                  {cvData.organization.achievements.map((item, idx) => (
-                    <li key={idx} className="flex items-start gap-3 text-sm text-slate-400">
-                      <ChevronRight size={16} className="text-blue-500 mt-0.5 flex-shrink-0" />
-                      <span>{item}</span>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Proj 1 -->
+                <div class="group bg-slate-900/50 border border-slate-800 p-6 rounded-2xl hover:bg-slate-900 hover:border-blue-500/50 transition-all flex flex-col h-full">
+                    <div class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">MSIB Bangkit Capstone - PT. Borwita</div>
+                    <h3 class="text-xl font-bold text-slate-100 mb-3 group-hover:text-blue-400 transition-colors">Optical Character Recognition (OCR) Model</h3>
+                    <p class="text-slate-400 text-sm mb-6 flex-grow leading-relaxed">
+                        Created an OCR model for ID cards based on a CNN-RNN architecture. Achieved 40% higher accuracy compared to default library packages like pytesseract, EasyOCR, and PyOCR. Solved problems with automatic landscaping and B&W ID cards using color conversion and thresholding.
+                    </p>
+                    <div class="flex flex-col gap-4 mt-auto">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-slate-950 text-slate-300 text-xs font-medium rounded-md border border-slate-800">Machine Learning</span>
+                            <span class="px-2 py-1 bg-slate-950 text-slate-300 text-xs font-medium rounded-md border border-slate-800">Python</span>
+                            <span class="px-2 py-1 bg-slate-950 text-slate-300 text-xs font-medium rounded-md border border-slate-800">CNN-RNN</span>
+                            <span class="px-2 py-1 bg-slate-950 text-slate-300 text-xs font-medium rounded-md border border-slate-800">Computer Vision</span>
+                        </div>
+                        <a href="https://github.com/Capstone-Borwita" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300 font-medium w-fit transition-colors pt-2">
+                            <i data-lucide="external-link" class="w-4 h-4"></i> View Project
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Proj 2 -->
+                <div class="group bg-slate-900/50 border border-slate-800 p-6 rounded-2xl hover:bg-slate-900 hover:border-blue-500/50 transition-all flex flex-col h-full">
+                    <div class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Finder U-CoE SANDBOX Program</div>
+                    <h3 class="text-xl font-bold text-slate-100 mb-3 group-hover:text-blue-400 transition-colors">Local AI-Agentic Scientific Review Bot</h3>
+                    <p class="text-slate-400 text-sm mb-6 flex-grow leading-relaxed">
+                        Developed a local AI-Agentic bot designed to conduct scientific reviews by interfacing with an open-source journal database.
+                    </p>
+                    <div class="flex flex-col gap-4 mt-auto">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-slate-950 text-slate-300 text-xs font-medium rounded-md border border-slate-800">AI Agent</span>
+                            <span class="px-2 py-1 bg-slate-950 text-slate-300 text-xs font-medium rounded-md border border-slate-800">Python</span>
+                            <span class="px-2 py-1 bg-slate-950 text-slate-300 text-xs font-medium rounded-md border border-slate-800">Research Tech</span>
+                        </div>
+                        <a href="https://agentic.tmcagen.online" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300 font-medium w-fit transition-colors pt-2">
+                            <i data-lucide="external-link" class="w-4 h-4"></i> View Project
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Proj 3 -->
+                <div class="group bg-slate-900/50 border border-slate-800 p-6 rounded-2xl hover:bg-slate-900 hover:border-blue-500/50 transition-all flex flex-col h-full">
+                    <div class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Padjadjaran University Undergraduate Research</div>
+                    <h3 class="text-xl font-bold text-slate-100 mb-3 group-hover:text-blue-400 transition-colors">Carbon-Dot Bioplastic LED Research</h3>
+                    <p class="text-slate-400 text-sm mb-6 flex-grow leading-relaxed">
+                        Fabricated an emission layer based on Carbon Quantum Dots Poly (9-Vinylcarbozole) (PVK) to create an eco-friendly LED with sharper color characteristics (30-40nm) compared to traditional OLEDs.
+                    </p>
+                    <div class="flex flex-col gap-4 mt-auto">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-slate-950 text-slate-300 text-xs font-medium rounded-md border border-slate-800">Physics</span>
+                            <span class="px-2 py-1 bg-slate-950 text-slate-300 text-xs font-medium rounded-md border border-slate-800">Materials Science</span>
+                            <span class="px-2 py-1 bg-slate-950 text-slate-300 text-xs font-medium rounded-md border border-slate-800">Hardware Fabrication</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Proj 4 -->
+                <div class="group bg-slate-900/50 border border-slate-800 p-6 rounded-2xl hover:bg-slate-900 hover:border-blue-500/50 transition-all flex flex-col h-full">
+                    <div class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Instrumentation Lab</div>
+                    <h3 class="text-xl font-bold text-slate-100 mb-3 group-hover:text-blue-400 transition-colors">PID Controller System Integration</h3>
+                    <p class="text-slate-400 text-sm mb-6 flex-grow leading-relaxed">
+                        Designed and implemented a PID controller system using an ATMega microcontroller integrated with a Python backend for data processing and control.
+                    </p>
+                    <div class="flex flex-col gap-4 mt-auto">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-slate-950 text-slate-300 text-xs font-medium rounded-md border border-slate-800">Microcontrollers</span>
+                            <span class="px-2 py-1 bg-slate-950 text-slate-300 text-xs font-medium rounded-md border border-slate-800">Python</span>
+                            <span class="px-2 py-1 bg-slate-950 text-slate-300 text-xs font-medium rounded-md border border-slate-800">Hardware-Software Integration</span>
+                        </div>
+                        <a href="https://github.com/adhiar/PID-python-C-integrated" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300 font-medium w-fit transition-colors pt-2">
+                            <i data-lucide="external-link" class="w-4 h-4"></i> View Project
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SKILLS SECTION -->
+        <section id="skills" class="py-20 scroll-mt-16">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="p-3 bg-blue-500/10 rounded-lg text-blue-400">
+                    <i data-lucide="cpu" class="w-6 h-6"></i>
+                </div>
+                <h2 class="text-3xl font-bold text-slate-100">Technical Arsenal</h2>
+                <div class="flex-grow h-px bg-slate-800 ml-4"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Software -->
+                <div class="bg-slate-900/30 p-8 rounded-3xl border border-slate-800/50">
+                    <div class="flex items-center gap-3 mb-6">
+                        <i data-lucide="database" class="w-6 h-6 text-blue-400"></i>
+                        <h3 class="text-xl font-bold text-slate-200">Software & Programming</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="px-3 py-1 bg-slate-800 text-blue-300 text-sm font-medium rounded-full border border-slate-700">Python</span>
+                        <span class="px-3 py-1 bg-slate-800 text-blue-300 text-sm font-medium rounded-full border border-slate-700">JavaScript</span>
+                        <span class="px-3 py-1 bg-slate-800 text-blue-300 text-sm font-medium rounded-full border border-slate-700">HTML/CSS</span>
+                        <span class="px-3 py-1 bg-slate-800 text-blue-300 text-sm font-medium rounded-full border border-slate-700">Machine Learning</span>
+                        <span class="px-3 py-1 bg-slate-800 text-blue-300 text-sm font-medium rounded-full border border-slate-700">CNN-RNN Architectures</span>
+                        <span class="px-3 py-1 bg-slate-800 text-blue-300 text-sm font-medium rounded-full border border-slate-700">AI Agents</span>
+                    </div>
+                </div>
+                
+                <!-- Hardware -->
+                <div class="bg-slate-900/30 p-8 rounded-3xl border border-slate-800/50">
+                    <div class="flex items-center gap-3 mb-6">
+                        <i data-lucide="cpu" class="w-6 h-6 text-indigo-400"></i>
+                        <h3 class="text-xl font-bold text-slate-200">Hardware & Instrumentation</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="px-3 py-1 bg-slate-800 text-blue-300 text-sm font-medium rounded-full border border-slate-700">LabView</span>
+                        <span class="px-3 py-1 bg-slate-800 text-blue-300 text-sm font-medium rounded-full border border-slate-700">Proteus</span>
+                        <span class="px-3 py-1 bg-slate-800 text-blue-300 text-sm font-medium rounded-full border border-slate-700">Microcontrollers</span>
+                        <span class="px-3 py-1 bg-slate-800 text-blue-300 text-sm font-medium rounded-full border border-slate-700">FTIR Characterization</span>
+                        <span class="px-3 py-1 bg-slate-800 text-blue-300 text-sm font-medium rounded-full border border-slate-700">Particle Size Analyzer</span>
+                        <span class="px-3 py-1 bg-slate-800 text-blue-300 text-sm font-medium rounded-full border border-slate-700">Photoluminescence</span>
+                        <span class="px-3 py-1 bg-slate-800 text-blue-300 text-sm font-medium rounded-full border border-slate-700">Electroluminescence</span>
+                        <span class="px-3 py-1 bg-slate-800 text-blue-300 text-sm font-medium rounded-full border border-slate-700">Battery Measurement (EIS, CV, Cycle test)</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AWARDS SECTION -->
+        <section id="awards" class="py-20 border-t border-slate-800/50 scroll-mt-16">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="p-3 bg-blue-500/10 rounded-lg text-blue-400">
+                    <i data-lucide="trophy" class="w-6 h-6"></i>
+                </div>
+                <h2 class="text-3xl font-bold text-slate-100">Honors & Awards</h2>
+                <div class="flex-grow h-px bg-slate-800 ml-4"></div>
+            </div>
+            
+            <div class="bg-slate-900 rounded-2xl p-6 md:p-10 border border-slate-800">
+                <ul class="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-4">
+                    <li class="flex items-start gap-3">
+                        <i data-lucide="trophy" class="w-4 h-4 text-yellow-600/80 mt-1 flex-shrink-0"></i>
+                        <span class="text-slate-300 text-sm leading-relaxed">Contributed Speaker in The 5th International Conference and Exhibition on Powder Technology Indonesia 2025</span>
                     </li>
-                  ))}
+                    <li class="flex items-start gap-3">
+                        <i data-lucide="trophy" class="w-4 h-4 text-yellow-600/80 mt-1 flex-shrink-0"></i>
+                        <span class="text-slate-300 text-sm leading-relaxed">Alumni of Summer Science Institute Program in National University Singapore Faculty of Science</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <i data-lucide="trophy" class="w-4 h-4 text-yellow-600/80 mt-1 flex-shrink-0"></i>
+                        <span class="text-slate-300 text-sm leading-relaxed">1st Winner on National Undergraduate Research Competition held by ITS</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <i data-lucide="trophy" class="w-4 h-4 text-yellow-600/80 mt-1 flex-shrink-0"></i>
+                        <span class="text-slate-300 text-sm leading-relaxed">1st Winner Physic Debate on National Competition held by UPI</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <i data-lucide="trophy" class="w-4 h-4 text-yellow-600/80 mt-1 flex-shrink-0"></i>
+                        <span class="text-slate-300 text-sm leading-relaxed">Runner-up in Business Plan Idea as team leader on National Competition held by UPH</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <i data-lucide="trophy" class="w-4 h-4 text-yellow-600/80 mt-1 flex-shrink-0"></i>
+                        <span class="text-slate-300 text-sm leading-relaxed">3rd Winner in Business Model Canvas as team leader on National Competition held by Telkom Uni</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <i data-lucide="trophy" class="w-4 h-4 text-yellow-600/80 mt-1 flex-shrink-0"></i>
+                        <span class="text-slate-300 text-sm leading-relaxed">TOP 5 Finalist Business Plan Idea in Binus Business Competition</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <i data-lucide="trophy" class="w-4 h-4 text-yellow-600/80 mt-1 flex-shrink-0"></i>
+                        <span class="text-slate-300 text-sm leading-relaxed">The Most Outstanding Student in Physic Department 2022</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <i data-lucide="trophy" class="w-4 h-4 text-yellow-600/80 mt-1 flex-shrink-0"></i>
+                        <span class="text-slate-300 text-sm leading-relaxed">Putra Fisika 2021</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <i data-lucide="trophy" class="w-4 h-4 text-yellow-600/80 mt-1 flex-shrink-0"></i>
+                        <span class="text-slate-300 text-sm leading-relaxed">Olympiad Delegation of Padjadjaran University on National Physic Olympiad for Undergraduate Student (ONMIPA 2021)</span>
+                    </li>
                 </ul>
-              </div>
             </div>
-
-          </div>
         </section>
 
-        {/* PROJECTS SECTION */}
-        <section id="projects" className="py-20">
-          <SectionHeading title="Featured Projects" icon={Code2} />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {cvData.projects.map((project) => (
-              <div key={project.id} className="group bg-slate-900/50 border border-slate-800 p-6 rounded-2xl hover:bg-slate-900 hover:border-blue-500/50 transition-all flex flex-col h-full">
-                <div className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">{project.context}</div>
-                <h3 className="text-xl font-bold text-slate-100 mb-3 group-hover:text-blue-400 transition-colors">{project.title}</h3>
-                <p className="text-slate-400 text-sm mb-6 flex-grow leading-relaxed">
-                  {project.description}
-                </p>
-                <div className="flex flex-col gap-4 mt-auto">
-                  <div className="flex flex-wrap gap-2">
-                    {project.tags.map((tag, idx) => (
-                      <span key={idx} className="px-2 py-1 bg-slate-950 text-slate-300 text-xs font-medium rounded-md border border-slate-800">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  {project.link && (
-                    <a 
-                      href={project.link} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300 font-medium w-fit transition-colors pt-2"
-                    >
-                      <ExternalLink size={16} />
-                      View Project
-                    </a>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
+    </main>
 
-        {/* SKILLS SECTION */}
-        <section id="skills" className="py-20">
-          <SectionHeading title="Technical Arsenal" icon={Cpu} />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-slate-900/30 p-8 rounded-3xl border border-slate-800/50">
-              <div className="flex items-center gap-3 mb-6">
-                <Database className="text-blue-400" size={24} />
-                <h3 className="text-xl font-bold text-slate-200">Software & Programming</h3>
-              </div>
-              <div className="flex flex-wrap gap-3">
-                {cvData.skills.software.map((skill, idx) => (
-                  <Badge key={idx}>{skill}</Badge>
-                ))}
-              </div>
-            </div>
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-900 py-8 text-center text-slate-500 text-sm">
+        <p>© <span id="year"></span> I Made Adhi Aryadi. All rights reserved.</p>
+        <p class="mt-2">Built with HTML & Tailwind CSS</p>
+    </footer>
+
+    <!-- Interactive Scripts -->
+    <script>
+        // Set Current Year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Mobile Menu Toggle Logic
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIconOpen = document.getElementById('menu-icon-open');
+        const menuIconClose = document.getElementById('menu-icon-close');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            menuIconOpen.classList.toggle('hidden');
+            menuIconClose.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when a link is clicked
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuIconOpen.classList.remove('hidden');
+                menuIconClose.classList.add('hidden');
+            });
+        });
+
+        // Scroll Spy Logic (Highlight active nav link)
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
             
-            <div className="bg-slate-900/30 p-8 rounded-3xl border border-slate-800/50">
-              <div className="flex items-center gap-3 mb-6">
-                <Cpu className="text-indigo-400" size={24} />
-                <h3 className="text-xl font-bold text-slate-200">Hardware & Instrumentation</h3>
-              </div>
-              <div className="flex flex-wrap gap-3">
-                {cvData.skills.hardware.map((skill, idx) => (
-                  <Badge key={idx}>{skill}</Badge>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 150)) {
+                    current = section.getAttribute('id');
+                }
+            });
 
-        {/* AWARDS SECTION */}
-        <section id="awards" className="py-20 border-t border-slate-800/50">
-          <SectionHeading title="Honors & Awards" icon={Trophy} />
-          <div className="bg-slate-900 rounded-2xl p-6 md:p-10 border border-slate-800">
-            <ul className="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-4">
-              {cvData.awards.map((award, idx) => (
-                <li key={idx} className="flex items-start gap-3">
-                  <Trophy size={16} className="text-yellow-600/80 mt-1 flex-shrink-0" />
-                  <span className="text-slate-300 text-sm leading-relaxed">{award}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-
-      </main>
-
-      {/* Footer */}
-      <footer className="bg-slate-950 border-t border-slate-900 py-8 text-center text-slate-500 text-sm">
-        <p>© {new Date().getFullYear()} {cvData.name}. All rights reserved.</p>
-        <p className="mt-2">Built with React & Tailwind CSS</p>
-      </footer>
-
-    </div>
-  );
-}
+            navLinks.forEach(link => {
+                link.classList.remove('text-blue-400');
+                link.classList.add('text-slate-400');
+                if (link.getAttribute('href').includes(current) && current !== '') {
+                    link.classList.remove('text-slate-400');
+                    link.classList.add('text-blue-400');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
