@@ -28,17 +28,95 @@
         body {
             background-color: #020617; /* slate-950 */
             color: #cbd5e1; /* slate-300 */
+            overflow-x: hidden;
+            position: relative;
         }
         /* Selection color */
         ::selection {
             background-color: rgba(59, 130, 246, 0.3); /* blue-500/30 */
         }
+        
+        /* Dynamic Gradient Circle Background */
+        .bg-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            background-color: #020617;
+        }
+        
+        .blob {
+            position: absolute;
+            filter: blur(100px);
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: float 20s infinite ease-in-out alternate;
+        }
+        
+        .blob-1 {
+            width: 50vw;
+            height: 50vw;
+            max-width: 600px;
+            max-height: 600px;
+            background: radial-gradient(circle, #1e3a8a 0%, #3b82f6 100%);
+            top: -10%;
+            left: -10%;
+            animation-duration: 25s;
+        }
+        
+        .blob-2 {
+            width: 60vw;
+            height: 60vw;
+            max-width: 700px;
+            max-height: 700px;
+            background: radial-gradient(circle, #312e81 0%, #6366f1 100%);
+            bottom: -20%;
+            right: -10%;
+            animation-duration: 28s;
+            animation-delay: -5s;
+        }
+        
+        .blob-3 {
+            width: 40vw;
+            height: 40vw;
+            max-width: 500px;
+            max-height: 500px;
+            background: radial-gradient(circle, #0ea5e9 0%, #1e40af 100%);
+            top: 40%;
+            left: 40%;
+            animation-duration: 22s;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0px, 0px) scale(1); }
+        }
+
+        /* Glassmorphism Utilities */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.4); /* slate-900/40 */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
     </style>
 </head>
-<body class="min-h-screen font-sans antialiased">
+<body class="min-h-screen font-sans antialiased text-slate-300">
+
+    <!-- Dynamic Background Elements -->
+    <div class="bg-shapes">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
 
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full bg-slate-950/80 backdrop-blur-md border-b border-slate-800 z-50 transition-all duration-300">
+    <nav class="fixed top-0 w-full glass-panel border-b border-slate-800/50 z-50 transition-all duration-300">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
@@ -68,29 +146,29 @@
         </div>
 
         <!-- Mobile Nav Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-b border-slate-800">
+        <div id="mobile-menu" class="hidden md:hidden glass-panel border-b border-slate-800/50">
             <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="#experience" class="mobile-nav-link block w-full text-left px-3 py-2 text-base font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-md">Experience</a>
-                <a href="#education" class="mobile-nav-link block w-full text-left px-3 py-2 text-base font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-md">Education</a>
-                <a href="#projects" class="mobile-nav-link block w-full text-left px-3 py-2 text-base font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-md">Projects</a>
-                <a href="#skills" class="mobile-nav-link block w-full text-left px-3 py-2 text-base font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-md">Skills</a>
-                <a href="#awards" class="mobile-nav-link block w-full text-left px-3 py-2 text-base font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-md">Awards</a>
+                <a href="#experience" class="mobile-nav-link block w-full text-left px-3 py-2 text-base font-medium text-slate-300 hover:bg-slate-800/50 hover:text-white rounded-md">Experience</a>
+                <a href="#education" class="mobile-nav-link block w-full text-left px-3 py-2 text-base font-medium text-slate-300 hover:bg-slate-800/50 hover:text-white rounded-md">Education</a>
+                <a href="#projects" class="mobile-nav-link block w-full text-left px-3 py-2 text-base font-medium text-slate-300 hover:bg-slate-800/50 hover:text-white rounded-md">Projects</a>
+                <a href="#skills" class="mobile-nav-link block w-full text-left px-3 py-2 text-base font-medium text-slate-300 hover:bg-slate-800/50 hover:text-white rounded-md">Skills</a>
+                <a href="#awards" class="mobile-nav-link block w-full text-left px-3 py-2 text-base font-medium text-slate-300 hover:bg-slate-800/50 hover:text-white rounded-md">Awards</a>
             </div>
         </div>
     </nav>
 
     <!-- Main Content -->
-    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16">
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16 relative z-10">
         
         <!-- HERO SECTION -->
         <section id="home" class="py-20 flex flex-col items-start min-h-[80vh] justify-center">
-            <div class="inline-block px-4 py-2 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded-full text-sm font-medium mb-6">
+            <div class="inline-block px-4 py-2 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded-full text-sm font-medium mb-6 backdrop-blur-sm">
                 Available for Opportunities
             </div>
-            <h1 class="text-5xl md:text-7xl font-extrabold text-slate-100 tracking-tight mb-4">
+            <h1 class="text-5xl md:text-7xl font-extrabold text-slate-100 tracking-tight mb-4 drop-shadow-md">
                 I Made <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">Adhi Aryadi</span>
             </h1>
-            <h2 class="text-xl md:text-2xl text-slate-400 font-medium mb-6">
+            <h2 class="text-xl md:text-2xl text-slate-300 font-medium mb-6">
                 Physics Graduate | Machine Learning & IT Enthusiast
             </h2>
             <p class="max-w-2xl text-lg text-slate-400 leading-relaxed mb-10">
@@ -98,10 +176,10 @@
             </p>
             
             <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-                <a href="mailto:adhiar2604@gmail.com" class="flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors">
+                <a href="mailto:adhiar2604@gmail.com" class="flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-500/20 rounded-lg font-medium transition-all duration-300">
                     <i data-lucide="mail" class="w-[18px] h-[18px]"></i> Contact Me
                 </a>
-                <div class="flex flex-wrap gap-4 items-center text-sm text-slate-400 bg-slate-900/50 px-6 py-3 rounded-lg border border-slate-800">
+                <div class="flex flex-wrap gap-4 items-center text-sm text-slate-300 glass-panel px-6 py-3 rounded-lg border border-slate-700/50">
                     <span class="flex items-center gap-2">
                         <i data-lucide="map-pin" class="w-4 h-4 text-blue-400"></i> Bandung, Indonesia
                     </span>
@@ -116,24 +194,24 @@
         <!-- EXPERIENCE SECTION -->
         <section id="experience" class="py-20 scroll-mt-16">
             <div class="flex items-center gap-3 mb-8">
-                <div class="p-3 bg-blue-500/10 rounded-lg text-blue-400">
+                <div class="p-3 bg-blue-500/10 rounded-lg text-blue-400 backdrop-blur-sm">
                     <i data-lucide="briefcase" class="w-6 h-6"></i>
                 </div>
                 <h2 class="text-3xl font-bold text-slate-100">Work Experience</h2>
-                <div class="flex-grow h-px bg-slate-800 ml-4"></div>
+                <div class="flex-grow h-px bg-slate-700/50 ml-4"></div>
             </div>
 
-            <div class="relative border-l border-slate-800 ml-3 md:ml-4 space-y-12">
+            <div class="relative border-l border-slate-700/50 ml-3 md:ml-4 space-y-12">
                 <!-- Exp 1 -->
-                <div class="relative pl-8 md:pl-0">
-                    <div class="absolute left-[-5px] md:left-[-5px] top-2 w-3 h-3 bg-slate-950 border-2 border-blue-500 rounded-full"></div>
-                    <div class="md:ml-10 bg-slate-900/50 border border-slate-800 p-6 rounded-2xl hover:border-slate-700 transition-colors">
+                <div class="relative pl-8 md:pl-0 group">
+                    <div class="absolute left-[-5px] md:left-[-5px] top-2 w-3 h-3 bg-slate-900 border-2 border-blue-500 rounded-full group-hover:bg-blue-400 transition-colors duration-300"></div>
+                    <div class="md:ml-10 glass-panel border border-slate-700/50 p-6 rounded-2xl hover:border-blue-500/30 transition-all duration-300 hover:shadow-[0_0_20px_rgba(59,130,246,0.1)]">
                         <div class="flex flex-col md:flex-row md:items-start justify-between mb-4 gap-2">
                             <div>
                                 <h3 class="text-xl font-bold text-slate-100">SANDBOX Program - IT Team</h3>
                                 <p class="text-blue-400 font-medium">Finder U-CoE (Nanofunctional Powder Research Group)</p>
                             </div>
-                            <div class="text-sm text-slate-500 font-mono bg-slate-950 px-3 py-1 rounded-full border border-slate-800 inline-block w-max">August 2025 - Present</div>
+                            <div class="text-sm text-slate-400 font-mono bg-slate-950/50 px-3 py-1 rounded-full border border-slate-700/50 inline-block w-max">August 2025 - Present</div>
                         </div>
                         <ul class="space-y-2 mt-4">
                             <li class="flex items-start gap-3 text-slate-400">
@@ -157,15 +235,15 @@
                 </div>
 
                 <!-- Exp 2 -->
-                <div class="relative pl-8 md:pl-0">
-                    <div class="absolute left-[-5px] md:left-[-5px] top-2 w-3 h-3 bg-slate-950 border-2 border-blue-500 rounded-full"></div>
-                    <div class="md:ml-10 bg-slate-900/50 border border-slate-800 p-6 rounded-2xl hover:border-slate-700 transition-colors">
+                <div class="relative pl-8 md:pl-0 group">
+                    <div class="absolute left-[-5px] md:left-[-5px] top-2 w-3 h-3 bg-slate-900 border-2 border-blue-500 rounded-full group-hover:bg-blue-400 transition-colors duration-300"></div>
+                    <div class="md:ml-10 glass-panel border border-slate-700/50 p-6 rounded-2xl hover:border-blue-500/30 transition-all duration-300 hover:shadow-[0_0_20px_rgba(59,130,246,0.1)]">
                         <div class="flex flex-col md:flex-row md:items-start justify-between mb-4 gap-2">
                             <div>
                                 <h3 class="text-xl font-bold text-slate-100">Fundamental Physics Tutor</h3>
                                 <p class="text-blue-400 font-medium">Physics Department of Padjadjaran University</p>
                             </div>
-                            <div class="text-sm text-slate-500 font-mono bg-slate-950 px-3 py-1 rounded-full border border-slate-800 inline-block w-max">Jan 2026 - Present</div>
+                            <div class="text-sm text-slate-400 font-mono bg-slate-950/50 px-3 py-1 rounded-full border border-slate-700/50 inline-block w-max">Jan 2026 - Present</div>
                         </div>
                         <ul class="space-y-2 mt-4">
                             <li class="flex items-start gap-3 text-slate-400">
@@ -185,15 +263,15 @@
                 </div>
 
                 <!-- Exp 3 -->
-                <div class="relative pl-8 md:pl-0">
-                    <div class="absolute left-[-5px] md:left-[-5px] top-2 w-3 h-3 bg-slate-950 border-2 border-blue-500 rounded-full"></div>
-                    <div class="md:ml-10 bg-slate-900/50 border border-slate-800 p-6 rounded-2xl hover:border-slate-700 transition-colors">
+                <div class="relative pl-8 md:pl-0 group">
+                    <div class="absolute left-[-5px] md:left-[-5px] top-2 w-3 h-3 bg-slate-900 border-2 border-blue-500 rounded-full group-hover:bg-blue-400 transition-colors duration-300"></div>
+                    <div class="md:ml-10 glass-panel border border-slate-700/50 p-6 rounded-2xl hover:border-blue-500/30 transition-all duration-300 hover:shadow-[0_0_20px_rgba(59,130,246,0.1)]">
                         <div class="flex flex-col md:flex-row md:items-start justify-between mb-4 gap-2">
                             <div>
                                 <h3 class="text-xl font-bold text-slate-100">Assistant Lecturer of Physics Calculus III</h3>
                                 <p class="text-blue-400 font-medium">Physics Department of Padjadjaran University</p>
                             </div>
-                            <div class="text-sm text-slate-500 font-mono bg-slate-950 px-3 py-1 rounded-full border border-slate-800 inline-block w-max">Jan 2025 - Aug 2025</div>
+                            <div class="text-sm text-slate-400 font-mono bg-slate-950/50 px-3 py-1 rounded-full border border-slate-700/50 inline-block w-max">Jan 2025 - Aug 2025</div>
                         </div>
                         <ul class="space-y-2 mt-4">
                             <li class="flex items-start gap-3 text-slate-400">
@@ -213,15 +291,15 @@
                 </div>
 
                 <!-- Exp 4 -->
-                <div class="relative pl-8 md:pl-0">
-                    <div class="absolute left-[-5px] md:left-[-5px] top-2 w-3 h-3 bg-slate-950 border-2 border-blue-500 rounded-full"></div>
-                    <div class="md:ml-10 bg-slate-900/50 border border-slate-800 p-6 rounded-2xl hover:border-slate-700 transition-colors">
+                <div class="relative pl-8 md:pl-0 group">
+                    <div class="absolute left-[-5px] md:left-[-5px] top-2 w-3 h-3 bg-slate-900 border-2 border-blue-500 rounded-full group-hover:bg-blue-400 transition-colors duration-300"></div>
+                    <div class="md:ml-10 glass-panel border border-slate-700/50 p-6 rounded-2xl hover:border-blue-500/30 transition-all duration-300 hover:shadow-[0_0_20px_rgba(59,130,246,0.1)]">
                         <div class="flex flex-col md:flex-row md:items-start justify-between mb-4 gap-2">
                             <div>
                                 <h3 class="text-xl font-bold text-slate-100">Coordinator Assistant Lab of Physics Instrumentation</h3>
                                 <p class="text-blue-400 font-medium">Akademi Metrologi dan Instrumentasi</p>
                             </div>
-                            <div class="text-sm text-slate-500 font-mono bg-slate-950 px-3 py-1 rounded-full border border-slate-800 inline-block w-max">Aug 2024 - Dec 2024</div>
+                            <div class="text-sm text-slate-400 font-mono bg-slate-950/50 px-3 py-1 rounded-full border border-slate-700/50 inline-block w-max">Aug 2024 - Dec 2024</div>
                         </div>
                         <ul class="space-y-2 mt-4">
                             <li class="flex items-start gap-3 text-slate-400">
@@ -241,15 +319,15 @@
                 </div>
 
                 <!-- Exp 5 -->
-                <div class="relative pl-8 md:pl-0">
-                    <div class="absolute left-[-5px] md:left-[-5px] top-2 w-3 h-3 bg-slate-950 border-2 border-blue-500 rounded-full"></div>
-                    <div class="md:ml-10 bg-slate-900/50 border border-slate-800 p-6 rounded-2xl hover:border-slate-700 transition-colors">
+                <div class="relative pl-8 md:pl-0 group">
+                    <div class="absolute left-[-5px] md:left-[-5px] top-2 w-3 h-3 bg-slate-900 border-2 border-blue-500 rounded-full group-hover:bg-blue-400 transition-colors duration-300"></div>
+                    <div class="md:ml-10 glass-panel border border-slate-700/50 p-6 rounded-2xl hover:border-blue-500/30 transition-all duration-300 hover:shadow-[0_0_20px_rgba(59,130,246,0.1)]">
                         <div class="flex flex-col md:flex-row md:items-start justify-between mb-4 gap-2">
                             <div>
                                 <h3 class="text-xl font-bold text-slate-100">Assistant Laboratory of Physics Instrumentation</h3>
                                 <p class="text-blue-400 font-medium">Physics Department of Padjadjaran University</p>
                             </div>
-                            <div class="text-sm text-slate-500 font-mono bg-slate-950 px-3 py-1 rounded-full border border-slate-800 inline-block w-max">Jan 2024 - July 2024</div>
+                            <div class="text-sm text-slate-400 font-mono bg-slate-950/50 px-3 py-1 rounded-full border border-slate-700/50 inline-block w-max">Jan 2024 - July 2024</div>
                         </div>
                         <ul class="space-y-2 mt-4">
                             <li class="flex items-start gap-3 text-slate-400">
@@ -269,15 +347,15 @@
                 </div>
 
                 <!-- Exp 6 -->
-                <div class="relative pl-8 md:pl-0">
-                    <div class="absolute left-[-5px] md:left-[-5px] top-2 w-3 h-3 bg-slate-950 border-2 border-blue-500 rounded-full"></div>
-                    <div class="md:ml-10 bg-slate-900/50 border border-slate-800 p-6 rounded-2xl hover:border-slate-700 transition-colors">
+                <div class="relative pl-8 md:pl-0 group">
+                    <div class="absolute left-[-5px] md:left-[-5px] top-2 w-3 h-3 bg-slate-900 border-2 border-blue-500 rounded-full group-hover:bg-blue-400 transition-colors duration-300"></div>
+                    <div class="md:ml-10 glass-panel border border-slate-700/50 p-6 rounded-2xl hover:border-blue-500/30 transition-all duration-300 hover:shadow-[0_0_20px_rgba(59,130,246,0.1)]">
                         <div class="flex flex-col md:flex-row md:items-start justify-between mb-4 gap-2">
                             <div>
                                 <h3 class="text-xl font-bold text-slate-100">Assistant Laboratory of Electronics Experiment</h3>
                                 <p class="text-blue-400 font-medium">Physics Department of Padjadjaran University</p>
                             </div>
-                            <div class="text-sm text-slate-500 font-mono bg-slate-950 px-3 py-1 rounded-full border border-slate-800 inline-block w-max">July 2023 - Dec 2023</div>
+                            <div class="text-sm text-slate-400 font-mono bg-slate-950/50 px-3 py-1 rounded-full border border-slate-700/50 inline-block w-max">July 2023 - Dec 2023</div>
                         </div>
                         <ul class="space-y-2 mt-4">
                             <li class="flex items-start gap-3 text-slate-400">
@@ -293,15 +371,15 @@
                 </div>
 
                 <!-- Exp 7 -->
-                <div class="relative pl-8 md:pl-0">
-                    <div class="absolute left-[-5px] md:left-[-5px] top-2 w-3 h-3 bg-slate-950 border-2 border-blue-500 rounded-full"></div>
-                    <div class="md:ml-10 bg-slate-900/50 border border-slate-800 p-6 rounded-2xl hover:border-slate-700 transition-colors">
+                <div class="relative pl-8 md:pl-0 group">
+                    <div class="absolute left-[-5px] md:left-[-5px] top-2 w-3 h-3 bg-slate-900 border-2 border-blue-500 rounded-full group-hover:bg-blue-400 transition-colors duration-300"></div>
+                    <div class="md:ml-10 glass-panel border border-slate-700/50 p-6 rounded-2xl hover:border-blue-500/30 transition-all duration-300 hover:shadow-[0_0_20px_rgba(59,130,246,0.1)]">
                         <div class="flex flex-col md:flex-row md:items-start justify-between mb-4 gap-2">
                             <div>
                                 <h3 class="text-xl font-bold text-slate-100">Innovation Readiness Level Assessor Team</h3>
                                 <p class="text-blue-400 font-medium">Finder U-CoE</p>
                             </div>
-                            <div class="text-sm text-slate-500 font-mono bg-slate-950 px-3 py-1 rounded-full border border-slate-800 inline-block w-max">June 2022 - Dec 2022</div>
+                            <div class="text-sm text-slate-400 font-mono bg-slate-950/50 px-3 py-1 rounded-full border border-slate-700/50 inline-block w-max">June 2022 - Dec 2022</div>
                         </div>
                         <ul class="space-y-2 mt-4">
                             <li class="flex items-start gap-3 text-slate-400">
@@ -326,11 +404,11 @@
         <!-- EDUCATION & ORG SECTION -->
         <section id="education" class="py-20 scroll-mt-16">
             <div class="flex items-center gap-3 mb-8">
-                <div class="p-3 bg-blue-500/10 rounded-lg text-blue-400">
+                <div class="p-3 bg-blue-500/10 rounded-lg text-blue-400 backdrop-blur-sm">
                     <i data-lucide="graduation-cap" class="w-6 h-6"></i>
                 </div>
                 <h2 class="text-3xl font-bold text-slate-100">Education & Leadership</h2>
-                <div class="flex-grow h-px bg-slate-800 ml-4"></div>
+                <div class="flex-grow h-px bg-slate-700/50 ml-4"></div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -341,18 +419,18 @@
                         <i data-lucide="microscope" class="w-5 h-5 text-indigo-400"></i> Academic Journey
                     </h3>
                     
-                    <div class="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 p-6 rounded-2xl">
+                    <div class="glass-panel border border-slate-700/50 p-6 rounded-2xl shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
                         <div class="text-sm text-blue-400 font-mono mb-2">Aug 2021 - Dec 2025</div>
                         <h4 class="text-lg font-bold text-slate-100">Bachelor Degree in Physics</h4>
                         <p class="text-slate-300 font-medium mb-3">Padjadjaran University</p>
                         <p class="text-sm text-slate-400 mb-3">Lab/Minor: Laboratory of Instrumentation, Electronic, Computation and Theoretical Physics.</p>
-                        <div class="mt-4 p-4 bg-slate-900 rounded-lg border border-slate-800 text-sm">
+                        <div class="mt-4 p-4 bg-slate-900/60 rounded-lg border border-slate-700/50 text-sm">
                             <strong class="text-indigo-300 block mb-1">Research Focus:</strong>
                             <span class="text-slate-400">Fabrication emission layer based on Carbon Quantum Dots Poly (9-Vinylcarbozole) (PVK) for Light Emitting Diode. Proposed to create a fully working LED with organic material called Carbon-Dot on bioplastic (sharper color than OLED, more eco-friendly than QLED).</span>
                         </div>
                     </div>
 
-                    <div class="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 p-6 rounded-2xl">
+                    <div class="glass-panel border border-slate-700/50 p-6 rounded-2xl shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
                         <div class="text-sm text-blue-400 font-mono mb-2">July 2024 - Dec 2024</div>
                         <h4 class="text-lg font-bold text-slate-100">Student Batch 2024 in Machine Learning</h4>
                         <p class="text-slate-300 font-medium mb-3">MSIB BANGKIT by GoTo, Traveloka, and Google</p>
@@ -365,7 +443,7 @@
                     <h3 class="text-2xl font-semibold text-slate-200 mb-6 flex items-center gap-2">
                         <i data-lucide="terminal-square" class="w-5 h-5 text-indigo-400"></i> Organization Experience
                     </h3>
-                    <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
+                    <div class="glass-panel border border-slate-700/50 p-6 rounded-2xl shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
                         <div class="text-sm text-blue-400 font-mono mb-2">Jan 2023 - Dec 2023</div>
                         <h4 class="text-lg font-bold text-slate-100">Executive Board Member / Core Management</h4>
                         <p class="text-slate-300 font-medium mb-4">HIFI Unpad (Physic Undergraduate Student Society)</p>
@@ -388,27 +466,27 @@
         <!-- PROJECTS SECTION -->
         <section id="projects" class="py-20 scroll-mt-16">
             <div class="flex items-center gap-3 mb-8">
-                <div class="p-3 bg-blue-500/10 rounded-lg text-blue-400">
+                <div class="p-3 bg-blue-500/10 rounded-lg text-blue-400 backdrop-blur-sm">
                     <i data-lucide="code-2" class="w-6 h-6"></i>
                 </div>
                 <h2 class="text-3xl font-bold text-slate-100">Featured Projects</h2>
-                <div class="flex-grow h-px bg-slate-800 ml-4"></div>
+                <div class="flex-grow h-px bg-slate-700/50 ml-4"></div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Proj 1 -->
-                <div class="group bg-slate-900/50 border border-slate-800 p-6 rounded-2xl hover:bg-slate-900 hover:border-blue-500/50 transition-all flex flex-col h-full">
-                    <div class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">MSIB Bangkit Capstone - PT. Borwita</div>
+                <div class="group glass-panel border border-slate-700/50 p-6 rounded-2xl hover:bg-slate-900/60 hover:border-blue-500/50 hover:shadow-[0_0_25px_rgba(59,130,246,0.15)] transition-all duration-300 flex flex-col h-full">
+                    <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">MSIB Bangkit Capstone - PT. Borwita</div>
                     <h3 class="text-xl font-bold text-slate-100 mb-3 group-hover:text-blue-400 transition-colors">Optical Character Recognition (OCR) Model</h3>
                     <p class="text-slate-400 text-sm mb-6 flex-grow leading-relaxed">
                         Created an OCR model for ID cards based on a CNN-RNN architecture. Achieved 40% higher accuracy compared to default library packages like pytesseract, EasyOCR, and PyOCR. Solved problems with automatic landscaping and B&W ID cards using color conversion and thresholding.
                     </p>
                     <div class="flex flex-col gap-4 mt-auto">
                         <div class="flex flex-wrap gap-2">
-                            <span class="px-2 py-1 bg-slate-950 text-slate-300 text-xs font-medium rounded-md border border-slate-800">Machine Learning</span>
-                            <span class="px-2 py-1 bg-slate-950 text-slate-300 text-xs font-medium rounded-md border border-slate-800">Python</span>
-                            <span class="px-2 py-1 bg-slate-950 text-slate-300 text-xs font-medium rounded-md border border-slate-800">CNN-RNN</span>
-                            <span class="px-2 py-1 bg-slate-950 text-slate-300 text-xs font-medium rounded-md border border-slate-800">Computer Vision</span>
+                            <span class="px-2 py-1 bg-slate-950/50 text-slate-300 text-xs font-medium rounded-md border border-slate-700/50">Machine Learning</span>
+                            <span class="px-2 py-1 bg-slate-950/50 text-slate-300 text-xs font-medium rounded-md border border-slate-700/50">Python</span>
+                            <span class="px-2 py-1 bg-slate-950/50 text-slate-300 text-xs font-medium rounded-md border border-slate-700/50">CNN-RNN</span>
+                            <span class="px-2 py-1 bg-slate-950/50 text-slate-300 text-xs font-medium rounded-md border border-slate-700/50">Computer Vision</span>
                         </div>
                         <a href="https://github.com/Capstone-Borwita" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300 font-medium w-fit transition-colors pt-2">
                             <i data-lucide="external-link" class="w-4 h-4"></i> View Project
@@ -416,36 +494,35 @@
                     </div>
                 </div>
                 <!-- Proj 2 -->
-                <div class="group bg-slate-900/50 border border-slate-800 p-6 rounded-2xl hover:bg-slate-900 hover:border-blue-500/50 transition-all flex flex-col h-full">
-                    <div class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Open Source Project - PyPublica</div>
-                    <h3 class="text-xl font-bold text-slate-100 mb-3 group-hover:text-blue-400 transition-colors">PyPublica:Open source Querying and Batch Downloader Journal</h3>
+                <div class="group glass-panel border border-slate-700/50 p-6 rounded-2xl hover:bg-slate-900/60 hover:border-blue-500/50 hover:shadow-[0_0_25px_rgba(59,130,246,0.15)] transition-all duration-300 flex flex-col h-full">
+                    <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Open Source Project - PyPublica</div>
+                    <h3 class="text-xl font-bold text-slate-100 mb-3 group-hover:text-blue-400 transition-colors">PyPublica: Open source Querying & Batch Downloader</h3>
                     <p class="text-slate-400 text-sm mb-6 flex-grow leading-relaxed">
-                       PyPublica is an open-source tool that helps people find open-access scientific articles using filters. PyPublica supports searching for over 1000 papers per request and includes a batch download feature. 
-                        PyPublica is built with Python, using Tkinter for the GUI.
+                        PyPublica is an open-source tool that helps people find open-access scientific articles using filters. PyPublica supports searching for over 1000 papers per request and includes a batch download feature. PyPublica is built with Python, using Tkinter for the GUI.
                     </p>
                     <div class="flex flex-col gap-4 mt-auto">
                         <div class="flex flex-wrap gap-2">
-                            <span class="px-2 py-1 bg-slate-950 text-slate-300 text-xs font-medium rounded-md border border-slate-800">AI Agent</span>
-                            <span class="px-2 py-1 bg-slate-950 text-slate-300 text-xs font-medium rounded-md border border-slate-800">Python</span>
-                            <span class="px-2 py-1 bg-slate-950 text-slate-300 text-xs font-medium rounded-md border border-slate-800">Research Tech</span>
+                            <span class="px-2 py-1 bg-slate-950/50 text-slate-300 text-xs font-medium rounded-md border border-slate-700/50">Software Development</span>
+                            <span class="px-2 py-1 bg-slate-950/50 text-slate-300 text-xs font-medium rounded-md border border-slate-700/50">Python</span>
+                            <span class="px-2 py-1 bg-slate-950/50 text-slate-300 text-xs font-medium rounded-md border border-slate-700/50">Research Tools</span>
                         </div>
-                        <a href="https://agentic.tmcagen.online" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300 font-medium w-fit transition-colors pt-2">
+                        <a href="https://github.com/adhiar/PyPublica/releases/tag/release" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300 font-medium w-fit transition-colors pt-2">
                             <i data-lucide="external-link" class="w-4 h-4"></i> View Project
                         </a>
                     </div>
                 </div>
-                <!-- Proj 2 -->
-                <div class="group bg-slate-900/50 border border-slate-800 p-6 rounded-2xl hover:bg-slate-900 hover:border-blue-500/50 transition-all flex flex-col h-full">
-                    <div class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Finder U-CoE SANDBOX Program</div>
+                <!-- Proj 3 -->
+                <div class="group glass-panel border border-slate-700/50 p-6 rounded-2xl hover:bg-slate-900/60 hover:border-blue-500/50 hover:shadow-[0_0_25px_rgba(59,130,246,0.15)] transition-all duration-300 flex flex-col h-full">
+                    <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Finder U-CoE SANDBOX Program</div>
                     <h3 class="text-xl font-bold text-slate-100 mb-3 group-hover:text-blue-400 transition-colors">Local AI-Agentic Scientific Review Bot</h3>
                     <p class="text-slate-400 text-sm mb-6 flex-grow leading-relaxed">
                         Developed a local AI-Agentic bot designed to conduct scientific reviews by interfacing with an open-source journal database.
                     </p>
                     <div class="flex flex-col gap-4 mt-auto">
                         <div class="flex flex-wrap gap-2">
-                            <span class="px-2 py-1 bg-slate-950 text-slate-300 text-xs font-medium rounded-md border border-slate-800">AI Agent</span>
-                            <span class="px-2 py-1 bg-slate-950 text-slate-300 text-xs font-medium rounded-md border border-slate-800">Python</span>
-                            <span class="px-2 py-1 bg-slate-950 text-slate-300 text-xs font-medium rounded-md border border-slate-800">Research Tech</span>
+                            <span class="px-2 py-1 bg-slate-950/50 text-slate-300 text-xs font-medium rounded-md border border-slate-700/50">AI Agent</span>
+                            <span class="px-2 py-1 bg-slate-950/50 text-slate-300 text-xs font-medium rounded-md border border-slate-700/50">Python</span>
+                            <span class="px-2 py-1 bg-slate-950/50 text-slate-300 text-xs font-medium rounded-md border border-slate-700/50">Research Tech</span>
                         </div>
                         <a href="https://agentic.tmcagen.online" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300 font-medium w-fit transition-colors pt-2">
                             <i data-lucide="external-link" class="w-4 h-4"></i> View Project
@@ -453,34 +530,34 @@
                     </div>
                 </div>
 
-                <!-- Proj 3 -->
-                <div class="group bg-slate-900/50 border border-slate-800 p-6 rounded-2xl hover:bg-slate-900 hover:border-blue-500/50 transition-all flex flex-col h-full">
-                    <div class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Padjadjaran University Undergraduate Research</div>
+                <!-- Proj 4 -->
+                <div class="group glass-panel border border-slate-700/50 p-6 rounded-2xl hover:bg-slate-900/60 hover:border-blue-500/50 hover:shadow-[0_0_25px_rgba(59,130,246,0.15)] transition-all duration-300 flex flex-col h-full">
+                    <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Padjadjaran University Undergraduate Research</div>
                     <h3 class="text-xl font-bold text-slate-100 mb-3 group-hover:text-blue-400 transition-colors">Carbon-Dot Bioplastic LED Research</h3>
                     <p class="text-slate-400 text-sm mb-6 flex-grow leading-relaxed">
                         Fabricated an emission layer based on Carbon Quantum Dots Poly (9-Vinylcarbozole) (PVK) to create an eco-friendly LED with sharper color characteristics (30-40nm) compared to traditional OLEDs.
                     </p>
                     <div class="flex flex-col gap-4 mt-auto">
                         <div class="flex flex-wrap gap-2">
-                            <span class="px-2 py-1 bg-slate-950 text-slate-300 text-xs font-medium rounded-md border border-slate-800">Physics</span>
-                            <span class="px-2 py-1 bg-slate-950 text-slate-300 text-xs font-medium rounded-md border border-slate-800">Materials Science</span>
-                            <span class="px-2 py-1 bg-slate-950 text-slate-300 text-xs font-medium rounded-md border border-slate-800">Hardware Fabrication</span>
+                            <span class="px-2 py-1 bg-slate-950/50 text-slate-300 text-xs font-medium rounded-md border border-slate-700/50">Physics</span>
+                            <span class="px-2 py-1 bg-slate-950/50 text-slate-300 text-xs font-medium rounded-md border border-slate-700/50">Materials Science</span>
+                            <span class="px-2 py-1 bg-slate-950/50 text-slate-300 text-xs font-medium rounded-md border border-slate-700/50">Hardware Fabrication</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Proj 4 -->
-                <div class="group bg-slate-900/50 border border-slate-800 p-6 rounded-2xl hover:bg-slate-900 hover:border-blue-500/50 transition-all flex flex-col h-full">
-                    <div class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Instrumentation Lab</div>
+                <!-- Proj 5 -->
+                <div class="group glass-panel border border-slate-700/50 p-6 rounded-2xl hover:bg-slate-900/60 hover:border-blue-500/50 hover:shadow-[0_0_25px_rgba(59,130,246,0.15)] transition-all duration-300 flex flex-col h-full md:col-span-2">
+                    <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Instrumentation Lab</div>
                     <h3 class="text-xl font-bold text-slate-100 mb-3 group-hover:text-blue-400 transition-colors">PID Controller System Integration</h3>
-                    <p class="text-slate-400 text-sm mb-6 flex-grow leading-relaxed">
+                    <p class="text-slate-400 text-sm mb-6 flex-grow leading-relaxed md:max-w-3xl">
                         Designed and implemented a PID controller system using an ATMega microcontroller integrated with a Python backend for data processing and control.
                     </p>
                     <div class="flex flex-col gap-4 mt-auto">
                         <div class="flex flex-wrap gap-2">
-                            <span class="px-2 py-1 bg-slate-950 text-slate-300 text-xs font-medium rounded-md border border-slate-800">Microcontrollers</span>
-                            <span class="px-2 py-1 bg-slate-950 text-slate-300 text-xs font-medium rounded-md border border-slate-800">Python</span>
-                            <span class="px-2 py-1 bg-slate-950 text-slate-300 text-xs font-medium rounded-md border border-slate-800">Hardware-Software Integration</span>
+                            <span class="px-2 py-1 bg-slate-950/50 text-slate-300 text-xs font-medium rounded-md border border-slate-700/50">Microcontrollers</span>
+                            <span class="px-2 py-1 bg-slate-950/50 text-slate-300 text-xs font-medium rounded-md border border-slate-700/50">Python</span>
+                            <span class="px-2 py-1 bg-slate-950/50 text-slate-300 text-xs font-medium rounded-md border border-slate-700/50">Hardware-Software Integration</span>
                         </div>
                         <a href="https://github.com/adhiar/PID-python-C-integrated" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300 font-medium w-fit transition-colors pt-2">
                             <i data-lucide="external-link" class="w-4 h-4"></i> View Project
@@ -494,100 +571,100 @@
         <!-- SKILLS SECTION -->
         <section id="skills" class="py-20 scroll-mt-16">
             <div class="flex items-center gap-3 mb-8">
-                <div class="p-3 bg-blue-500/10 rounded-lg text-blue-400">
+                <div class="p-3 bg-blue-500/10 rounded-lg text-blue-400 backdrop-blur-sm">
                     <i data-lucide="cpu" class="w-6 h-6"></i>
                 </div>
                 <h2 class="text-3xl font-bold text-slate-100">Technical Arsenal</h2>
-                <div class="flex-grow h-px bg-slate-800 ml-4"></div>
+                <div class="flex-grow h-px bg-slate-700/50 ml-4"></div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <!-- Software -->
-                <div class="bg-slate-900/30 p-8 rounded-3xl border border-slate-800/50">
+                <div class="glass-panel p-8 rounded-3xl border border-slate-700/50 shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
                     <div class="flex items-center gap-3 mb-6">
                         <i data-lucide="database" class="w-6 h-6 text-blue-400"></i>
                         <h3 class="text-xl font-bold text-slate-200">Software & Programming</h3>
                     </div>
                     <div class="flex flex-wrap gap-3">
-                        <span class="px-3 py-1 bg-slate-800 text-blue-300 text-sm font-medium rounded-full border border-slate-700">Python</span>
-                        <span class="px-3 py-1 bg-slate-800 text-blue-300 text-sm font-medium rounded-full border border-slate-700">JavaScript</span>
-                        <span class="px-3 py-1 bg-slate-800 text-blue-300 text-sm font-medium rounded-full border border-slate-700">HTML/CSS</span>
-                        <span class="px-3 py-1 bg-slate-800 text-blue-300 text-sm font-medium rounded-full border border-slate-700">Machine Learning</span>
-                        <span class="px-3 py-1 bg-slate-800 text-blue-300 text-sm font-medium rounded-full border border-slate-700">CNN-RNN Architectures</span>
-                        <span class="px-3 py-1 bg-slate-800 text-blue-300 text-sm font-medium rounded-full border border-slate-700">AI Agents</span>
+                        <span class="px-3 py-1.5 bg-slate-800/80 text-blue-300 text-sm font-medium rounded-full border border-slate-600/50">Python</span>
+                        <span class="px-3 py-1.5 bg-slate-800/80 text-blue-300 text-sm font-medium rounded-full border border-slate-600/50">JavaScript</span>
+                        <span class="px-3 py-1.5 bg-slate-800/80 text-blue-300 text-sm font-medium rounded-full border border-slate-600/50">HTML/CSS</span>
+                        <span class="px-3 py-1.5 bg-slate-800/80 text-blue-300 text-sm font-medium rounded-full border border-slate-600/50">Machine Learning</span>
+                        <span class="px-3 py-1.5 bg-slate-800/80 text-blue-300 text-sm font-medium rounded-full border border-slate-600/50">CNN-RNN Architectures</span>
+                        <span class="px-3 py-1.5 bg-slate-800/80 text-blue-300 text-sm font-medium rounded-full border border-slate-600/50">AI Agents</span>
                     </div>
                 </div>
                 
                 <!-- Hardware -->
-                <div class="bg-slate-900/30 p-8 rounded-3xl border border-slate-800/50">
+                <div class="glass-panel p-8 rounded-3xl border border-slate-700/50 shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
                     <div class="flex items-center gap-3 mb-6">
                         <i data-lucide="cpu" class="w-6 h-6 text-indigo-400"></i>
                         <h3 class="text-xl font-bold text-slate-200">Hardware & Instrumentation</h3>
                     </div>
                     <div class="flex flex-wrap gap-3">
-                        <span class="px-3 py-1 bg-slate-800 text-blue-300 text-sm font-medium rounded-full border border-slate-700">LabView</span>
-                        <span class="px-3 py-1 bg-slate-800 text-blue-300 text-sm font-medium rounded-full border border-slate-700">Proteus</span>
-                        <span class="px-3 py-1 bg-slate-800 text-blue-300 text-sm font-medium rounded-full border border-slate-700">Microcontrollers</span>
-                        <span class="px-3 py-1 bg-slate-800 text-blue-300 text-sm font-medium rounded-full border border-slate-700">FTIR Characterization</span>
-                        <span class="px-3 py-1 bg-slate-800 text-blue-300 text-sm font-medium rounded-full border border-slate-700">Particle Size Analyzer</span>
-                        <span class="px-3 py-1 bg-slate-800 text-blue-300 text-sm font-medium rounded-full border border-slate-700">Photoluminescence</span>
-                        <span class="px-3 py-1 bg-slate-800 text-blue-300 text-sm font-medium rounded-full border border-slate-700">Electroluminescence</span>
-                        <span class="px-3 py-1 bg-slate-800 text-blue-300 text-sm font-medium rounded-full border border-slate-700">Battery Measurement (EIS, CV, Cycle test)</span>
+                        <span class="px-3 py-1.5 bg-slate-800/80 text-indigo-300 text-sm font-medium rounded-full border border-slate-600/50">LabView</span>
+                        <span class="px-3 py-1.5 bg-slate-800/80 text-indigo-300 text-sm font-medium rounded-full border border-slate-600/50">Proteus</span>
+                        <span class="px-3 py-1.5 bg-slate-800/80 text-indigo-300 text-sm font-medium rounded-full border border-slate-600/50">Microcontrollers</span>
+                        <span class="px-3 py-1.5 bg-slate-800/80 text-indigo-300 text-sm font-medium rounded-full border border-slate-600/50">FTIR Characterization</span>
+                        <span class="px-3 py-1.5 bg-slate-800/80 text-indigo-300 text-sm font-medium rounded-full border border-slate-600/50">Particle Size Analyzer</span>
+                        <span class="px-3 py-1.5 bg-slate-800/80 text-indigo-300 text-sm font-medium rounded-full border border-slate-600/50">Photoluminescence</span>
+                        <span class="px-3 py-1.5 bg-slate-800/80 text-indigo-300 text-sm font-medium rounded-full border border-slate-600/50">Electroluminescence</span>
+                        <span class="px-3 py-1.5 bg-slate-800/80 text-indigo-300 text-sm font-medium rounded-full border border-slate-600/50">Battery Measurement</span>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- AWARDS SECTION -->
-        <section id="awards" class="py-20 border-t border-slate-800/50 scroll-mt-16">
+        <section id="awards" class="py-20 scroll-mt-16 relative">
             <div class="flex items-center gap-3 mb-8">
-                <div class="p-3 bg-blue-500/10 rounded-lg text-blue-400">
+                <div class="p-3 bg-blue-500/10 rounded-lg text-blue-400 backdrop-blur-sm">
                     <i data-lucide="trophy" class="w-6 h-6"></i>
                 </div>
                 <h2 class="text-3xl font-bold text-slate-100">Honors & Awards</h2>
-                <div class="flex-grow h-px bg-slate-800 ml-4"></div>
+                <div class="flex-grow h-px bg-slate-700/50 ml-4"></div>
             </div>
             
-            <div class="bg-slate-900 rounded-2xl p-6 md:p-10 border border-slate-800">
+            <div class="glass-panel rounded-2xl p-6 md:p-10 border border-slate-700/50 shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
                 <ul class="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-4">
                     <li class="flex items-start gap-3">
-                        <i data-lucide="trophy" class="w-4 h-4 text-yellow-600/80 mt-1 flex-shrink-0"></i>
+                        <i data-lucide="trophy" class="w-4 h-4 text-yellow-500/80 mt-1 flex-shrink-0"></i>
                         <span class="text-slate-300 text-sm leading-relaxed">Contributed Speaker in The 5th International Conference and Exhibition on Powder Technology Indonesia 2025</span>
                     </li>
                     <li class="flex items-start gap-3">
-                        <i data-lucide="trophy" class="w-4 h-4 text-yellow-600/80 mt-1 flex-shrink-0"></i>
+                        <i data-lucide="trophy" class="w-4 h-4 text-yellow-500/80 mt-1 flex-shrink-0"></i>
                         <span class="text-slate-300 text-sm leading-relaxed">Alumni of Summer Science Institute Program in National University Singapore Faculty of Science</span>
                     </li>
                     <li class="flex items-start gap-3">
-                        <i data-lucide="trophy" class="w-4 h-4 text-yellow-600/80 mt-1 flex-shrink-0"></i>
+                        <i data-lucide="trophy" class="w-4 h-4 text-yellow-500/80 mt-1 flex-shrink-0"></i>
                         <span class="text-slate-300 text-sm leading-relaxed">1st Winner on National Undergraduate Research Competition held by ITS</span>
                     </li>
                     <li class="flex items-start gap-3">
-                        <i data-lucide="trophy" class="w-4 h-4 text-yellow-600/80 mt-1 flex-shrink-0"></i>
+                        <i data-lucide="trophy" class="w-4 h-4 text-yellow-500/80 mt-1 flex-shrink-0"></i>
                         <span class="text-slate-300 text-sm leading-relaxed">1st Winner Physic Debate on National Competition held by UPI</span>
                     </li>
                     <li class="flex items-start gap-3">
-                        <i data-lucide="trophy" class="w-4 h-4 text-yellow-600/80 mt-1 flex-shrink-0"></i>
+                        <i data-lucide="trophy" class="w-4 h-4 text-yellow-500/80 mt-1 flex-shrink-0"></i>
                         <span class="text-slate-300 text-sm leading-relaxed">Runner-up in Business Plan Idea as team leader on National Competition held by UPH</span>
                     </li>
                     <li class="flex items-start gap-3">
-                        <i data-lucide="trophy" class="w-4 h-4 text-yellow-600/80 mt-1 flex-shrink-0"></i>
+                        <i data-lucide="trophy" class="w-4 h-4 text-yellow-500/80 mt-1 flex-shrink-0"></i>
                         <span class="text-slate-300 text-sm leading-relaxed">3rd Winner in Business Model Canvas as team leader on National Competition held by Telkom Uni</span>
                     </li>
                     <li class="flex items-start gap-3">
-                        <i data-lucide="trophy" class="w-4 h-4 text-yellow-600/80 mt-1 flex-shrink-0"></i>
+                        <i data-lucide="trophy" class="w-4 h-4 text-yellow-500/80 mt-1 flex-shrink-0"></i>
                         <span class="text-slate-300 text-sm leading-relaxed">TOP 5 Finalist Business Plan Idea in Binus Business Competition</span>
                     </li>
                     <li class="flex items-start gap-3">
-                        <i data-lucide="trophy" class="w-4 h-4 text-yellow-600/80 mt-1 flex-shrink-0"></i>
+                        <i data-lucide="trophy" class="w-4 h-4 text-yellow-500/80 mt-1 flex-shrink-0"></i>
                         <span class="text-slate-300 text-sm leading-relaxed">The Most Outstanding Student in Physic Department 2022</span>
                     </li>
                     <li class="flex items-start gap-3">
-                        <i data-lucide="trophy" class="w-4 h-4 text-yellow-600/80 mt-1 flex-shrink-0"></i>
+                        <i data-lucide="trophy" class="w-4 h-4 text-yellow-500/80 mt-1 flex-shrink-0"></i>
                         <span class="text-slate-300 text-sm leading-relaxed">Putra Fisika 2021</span>
                     </li>
                     <li class="flex items-start gap-3">
-                        <i data-lucide="trophy" class="w-4 h-4 text-yellow-600/80 mt-1 flex-shrink-0"></i>
+                        <i data-lucide="trophy" class="w-4 h-4 text-yellow-500/80 mt-1 flex-shrink-0"></i>
                         <span class="text-slate-300 text-sm leading-relaxed">Olympiad Delegation of Padjadjaran University on National Physic Olympiad for Undergraduate Student (ONMIPA 2021)</span>
                     </li>
                 </ul>
@@ -597,9 +674,9 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-slate-950 border-t border-slate-900 py-8 text-center text-slate-500 text-sm">
+    <footer class="relative z-10 glass-panel border-t border-slate-800/50 py-8 text-center text-slate-500 text-sm">
         <p>© <span id="year"></span> I Made Adhi Aryadi. All rights reserved.</p>
-        <p class="mt-2">Built with HTML & Tailwind CSS</p>
+        <p class="mt-2 text-slate-600">Built with HTML & Tailwind CSS</p>
     </footer>
 
     <!-- Interactive Scripts -->
